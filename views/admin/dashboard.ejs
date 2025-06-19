@@ -1,0 +1,61 @@
+<h2>Admin Dashboard</h2>
+
+<h3>Ticket Stats</h3>
+<ul>
+  <li>Total: <%= stats.total %></li>
+  <li>Open: <%= stats.open %></li>
+  <li>In Progress: <%= stats.inProgress %></li>
+  <li>Resolved: <%= stats.resolved %></li>
+</ul>
+
+<h3>Category Breakdown</h3>
+<ul>
+  <% Object.entries(categories).forEach(([cat, count]) => { %>
+    <li><%= cat %>: <%= count %></li>
+  <% }) %>
+</ul>
+
+<h3>All Tickets</h3>
+<table border="1">
+  <tr>
+    <th>Title</th>
+    <th>Customer</th>
+    <th>Status</th>
+    <th>Assigned Agent</th>
+    <th>Actions</th>
+  </tr>
+  <% tickets.forEach(ticket => { %>
+    <tr>
+      <td><%= ticket.title %></td>
+      <td><%= ticket.customer?.username %></td>
+      <td><%= ticket.status %></td>
+      <td><%= ticket.assigned_agent?.username || 'Unassigned' %></td>
+      <td>
+        <form action="/admin/assign/<%= ticket._id %>" method="POST">
+          <select name="agentId">
+            <% agents.forEach(agent => { %>
+              <option value="<%= agent._id %>" <%= ticket.assigned_agent?._id.toString() === agent._id.toString() ? 'selected' : '' %>>
+                <%= agent.username %>
+              </option>
+            <% }) %>
+          </select>
+          <button>Assign</button>
+        </form>
+
+        <form action="/admin/status/<%= ticket._id %>" method="POST">
+          <select name="status">
+            <option value="Open" <%= ticket.status === 'Open' ? 'selected' : '' %>>Open</option>
+            <option value="In Progress" <%= ticket.status === 'In Progress' ? 'selected' : '' %>>In Progress</option>
+            <option value="Resolved" <%= ticket.status === 'Resolved' ? 'selected' : '' %>>Resolved</option>
+          </select>
+          <button>Update</button>
+        </form>
+
+        <form action="/admin/close/<%= ticket._id %>" method="POST" style="margin-top: 4px;">
+          <button onclick="return confirm('Close this ticket and GitHub issue?')">Close Ticket</button>
+        </form>
+
+      </td>
+    </tr>
+  <% }) %>
+</table>

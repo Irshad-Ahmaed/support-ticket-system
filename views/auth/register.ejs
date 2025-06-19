@@ -1,6 +1,18 @@
-<form action="/register" method="POST">
-  <input name="username" placeholder="Username" />
-  <input name="email" placeholder="Email" />
-  <input type="password" name="password" />
+<h2>Register</h2>
+
+<form action="/auth/register" method="POST">
+  <input name="username" placeholder="Username" required />
+  <input name="email" placeholder="Email" required />
+  <input type="password" name="password" placeholder="Password" required />
+
+  <label for="role">Role</label>
+  <select name="role" required>
+    <option value="customer">Customer</option>
+    <option value="agent">Support Agent</option>
+    <option value="admin">Admin</option>
+  </select>
+
   <button type="submit">Register</button>
 </form>
+
+<p>Already have an account? <a href="/auth/login">Login here</a></p>

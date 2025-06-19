@@ -1,0 +1,31 @@
+<nav>
+  <a href="/">Home</a>
+
+  <% if (!session || !session.user) { %>
+    <a href="/auth/login">Login</a>
+    <a href="/auth/register">Register</a>
+  <% } else { %>
+    <% const role = session.user.role?.toLowerCase(); %>
+
+    <% if (role === 'admin') { %>
+      <a href="/admin">Admin Panel</a>
+    <% } else if (role === 'agent') { %>
+      <a href="/agent/tickets">My Tickets</a>
+    <% } else { %>
+      <a href="/ticket">My Tickets</a>
+      <a href="/ticket/create">Create Tickets</a>
+    <% } %>
+
+    <a href="/auth/logout">Logout (<%= session.user.username %>)</a>
+  <% } %>
+</nav>
+
+<% if (success_msg) { %>
+  <div class="alert alert-success"><%= success_msg %></div>
+<% } %>
+
+<% if (error_msg) { %>
+  <div class="alert alert-danger"><%= error_msg %></div>
+<% } %>
+
+<hr />

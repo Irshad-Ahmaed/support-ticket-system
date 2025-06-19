@@ -1,0 +1,8 @@
+<h2>Assigned Tickets</h2>
+<ul>
+  <% tickets.forEach(ticket => { %>
+    <li>
+      <a href="/agent/tickets/<%= ticket._id %>"><%= ticket.title %></a> - <%= ticket.status %>
+    </li>
+  <% }) %>
+</ul>

@@ -2,8 +2,9 @@
 <ul>
   <% tickets.forEach(ticket => { %>
     <li>
-      <%= ticket.title %> - <%= ticket.status %> -
-      <a href="<%= ticket.github_issue_url %>" target="_blank">View on GitHub</a>
+      <a href="/ticket/<%= ticket._id %>"><%= ticket.title %></a>
+      - <%= ticket.status %>
+      - <a href="<%= ticket.github_issue_url %>" target="_blank">GitHub Issue</a>
     </li>
   <% }) %>
 </ul>

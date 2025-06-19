@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Support Ticketing System</title>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <h1>Welcome to the Support Ticketing System</h1>
+  <p>This is a mini platform for managing support tickets with GitHub integration.</p>
+
+  <% if (!session?.user) { %>
+    <p><a href="/auth/register">Register</a> or <a href="/auth/login">Login</a> to get started.</p>
+  <% } else { %>
+    <p>Welcome, <%= session.user.username %>!</p>
+  <% } %>
+</body>
+</html>

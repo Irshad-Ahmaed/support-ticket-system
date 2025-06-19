@@ -13,3 +13,16 @@ exports.createGitHubIssue = async (title, body) => {
   );
   return response.data;
 };
+
+exports.closeGitHubIssue = async(issueNumber)=> {
+  await axios.patch(
+    `https://api.github.com/repos/${process.env.GITHUB_REPO}/issues/${issueNumber}`,
+    { state: 'closed' },
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        'User-Agent': 'support-ticket-system',
+      },
+    }
+  );
+}

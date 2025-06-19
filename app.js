@@ -1,13 +1,14 @@
-import express from 'express';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
-import path from 'path';
-import dotenv from 'dotenv';
-import flash from 'connect-flash';
-import connectDB from './config/db.js';
-import routes from './routes/index.js'; // Update based on your route file structure
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+const express = require('express');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const path = require('path');
+const dotenv = require('dotenv');
+const flash = require('connect-flash');
+const connectDB = require('./config/db');
+const authRoutes = require('./routes/auth');
+const agentRoutes = require('./routes/agent');
+const ticketRoutes = require('./routes/ticket');
+const adminRoutes = require('./routes/admin');
 
 dotenv.config();
 
@@ -15,10 +16,6 @@ dotenv.config();
 connectDB();
 
 const app = express();
-
-// Path correction for ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -49,7 +46,14 @@ app.use((req, res, next) => {
 });
 
 // Routing
-app.use('/', routes); // Replace with actual routing logic
+app.get('/', (req, res) => {
+  res.render('home', { session: req.session });
+});
+
+app.use('/auth', authRoutes);
+app.use('/agent', agentRoutes);
+app.use('/ticket', ticketRoutes);
+app.use('/admin', adminRoutes);
 
 // Server
 const PORT = process.env.PORT || 3000;

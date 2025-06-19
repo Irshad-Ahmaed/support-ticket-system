@@ -1,0 +1,23 @@
+<h2><%= ticket.title %> (Status: <%= ticket.status %>)</h2>
+<p><%= ticket.description %></p>
+
+<h3>Replies:</h3>
+<ul>
+  <% replies.forEach(reply => { %>
+    <li><strong><%= reply.user.username %></strong>: <%= reply.message %></li>
+  <% }) %>
+</ul>
+
+<form action="/agent/tickets/<%= ticket._id %>/reply" method="POST">
+  <textarea name="message" required></textarea>
+  <button type="submit">Post Reply</button>
+</form>
+
+<form action="/agent/tickets/<%= ticket._id %>/status" method="POST">
+  <select name="status">
+    <option value="Open" <%= ticket.status === 'Open' ? 'selected' : '' %>>Open</option>
+    <option value="In Progress" <%= ticket.status === 'In Progress' ? 'selected' : '' %>>In Progress</option>
+    <option value="Resolved" <%= ticket.status === 'Resolved' ? 'selected' : '' %>>Resolved</option>
+  </select>
+  <button type="submit">Update Status</button>
+</form>

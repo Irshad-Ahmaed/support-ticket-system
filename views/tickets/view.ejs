@@ -1,0 +1,19 @@
+<%- include('../partials/navbar') %>
+
+<h2><%= ticket.title %></h2>
+<p><strong>Status:</strong> <%= ticket.status %></p>
+<p><strong>Description:</strong> <%= ticket.description %></p>
+<p><strong>GitHub:</strong> <a href="<%= ticket.github_issue_url %>" target="_blank">View on GitHub</a></p>
+
+<hr>
+
+<h3>Replies</h3>
+<% if (replies.length === 0) { %>
+  <p>No replies yet.</p>
+<% } else { %>
+  <ul>
+    <% replies.forEach(reply => { %>
+      <li><strong><%= reply.user.username %>:</strong> <%= reply.message %></li>
+    <% }) %>
+  </ul>
+<% } %>
